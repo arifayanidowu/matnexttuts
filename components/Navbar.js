@@ -114,7 +114,8 @@ const Navbar = () => {
     top: false,
     left: false,
     bottom: false,
-    right: false
+    right: false,
+    auth: false
   });
 
   const isMenuOpen = Boolean(anchorEl);
@@ -126,6 +127,10 @@ const Navbar = () => {
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
+  };
+
+  const isActive = path => {
+    return router.pathname === path;
   };
 
   const handleMenuClose = () => {
@@ -189,42 +194,62 @@ const Navbar = () => {
     <>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-            onClick={toggleDrawer("left", true)}
-          >
-            <MenuIcon />
-          </IconButton>
+          {state.auth && (
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+              onClick={toggleDrawer("left", true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Link href="/">
             <a
               className={classes.title}
-              style={{ color: "#fff", fontWeight: "700" }}
+              style={{
+                color: isActive("/") ? "#ccc" : "#fff",
+                fontWeight: "700"
+              }}
             >
               RS Library
             </a>
           </Link>
+          <Link href="/">
+            <a className={classes.sectionMobile} style={{ color: "#fff" }}>
+              <LibraryBooksIcon />
+            </a>
+          </Link>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+            {state.auth && (
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                />
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
-            <Button color="inherit" onClick={() => router.push("/signup")}>
+            )}
+            <Button
+              color={isActive("/signup") ? "secondary" : "inherit"}
+              onClick={() => router.push("/signup")}
+              style={{ fontWeight: "700" }}
+            >
               Signup
             </Button>
-            <Button color="inherit" onClick={() => router.push("/login")}>
+            <Button
+              color={isActive("/login") ? "secondary" : "inherit"}
+              onClick={() => router.push("/login")}
+              style={{ fontWeight: "700" }}
+            >
               Login
             </Button>
           </div>
@@ -260,9 +285,11 @@ const Navbar = () => {
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer open={state.left} onClose={toggleDrawer("left", false)}>
-        {sideList("left")}
-      </Drawer>
+      {state.auth && (
+        <Drawer open={state.left} onClose={toggleDrawer("left", false)}>
+          {sideList("left")}
+        </Drawer>
+      )}
     </>
   );
 };

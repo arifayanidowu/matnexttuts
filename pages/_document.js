@@ -20,6 +20,10 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
           <link rel="stylesheet" type="text/css" href="/nprogress.css" />
+          {/* <script
+            src="https://kit.fontawesome.com/63977b551c.js"
+            crossOrigin="anonymous"
+          ></script> */}
         </Head>
         <body>
           <Main />

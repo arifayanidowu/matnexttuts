@@ -5,7 +5,16 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
-import { Paper, Typography, Divider, Container, Card } from "@material-ui/core";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import {
+  Paper,
+  Typography,
+  Divider,
+  Container,
+  Card,
+  Button
+} from "@material-ui/core";
+import Router, { useRouter } from "next/router";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,6 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     color: theme.palette.secondary.light
+    // color: "#fff"
   },
   titleBar: {
     background:
@@ -39,39 +49,43 @@ const useStyles = makeStyles(theme => ({
   bordered: {
     border: "3px solid #fefefe",
     boxShadow: "0 0 0 rgba(0,0,0,0.3)"
+  },
+  centeredBtn: {
+    margin: "30px auto"
   }
 }));
 
 const tileData = [
   {
     img: "/images/pile.jpg",
-    title: "Pile",
+    title: "Fantasy",
     author: "author 1"
   },
   {
     img: "/images/closeup.jpg",
-    title: "Close Up",
+    title: "Suspense",
     author: "author 2"
   },
   {
     img: "/images/pile_books.jpg",
-    title: "Pile of Books",
+    title: "Educational",
     author: "author 3"
   },
   {
     img: "/images/book-chapter-six.jpg",
-    title: "Book of Chapter",
+    title: "Wellness",
     author: "author 4"
   },
   {
     img: "/images/close-up-of-paper.jpg",
-    title: "Close of Paper",
+    title: "Romance",
     author: "author 5"
   }
 ];
 
 export default function Tile() {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <Container>
@@ -95,14 +109,31 @@ export default function Tile() {
                   title: classes.title
                 }}
                 actionIcon={
-                  <IconButton aria-label={`star ${tile.title}`}>
-                    <StarBorderIcon className={classes.title} />
-                  </IconButton>
+                  // <IconButton aria-label={`star ${tile.title}`}>
+                  //   <StarBorderIcon className={classes.title} />
+                  // </IconButton>
+                  <Button
+                    color="inherit"
+                    variant="contained"
+                    style={{ marginRight: "10px" }}
+                    onClick={() => router.replace("/signup")}
+                  >
+                    Explore <StarBorderIcon className={classes.title} />
+                  </Button>
                 }
               />
             </GridListTile>
           ))}
         </GridList>
+        <Button
+          className={classes.centeredBtn}
+          color="primary"
+          variant="contained"
+          size="large"
+          onClick={() => router.replace("/signup")}
+        >
+          sign up and Explore <ArrowForwardIcon fontSize="small" />
+        </Button>
       </div>
     </Container>
   );
