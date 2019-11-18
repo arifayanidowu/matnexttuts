@@ -2,10 +2,28 @@ import React from "react";
 import App from "next/app";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { parseCookies, destroyCookie } from "nookies";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../lib/theme";
+import { redirectUser } from "../lib/auth";
 
 export default class MyApp extends App {
+  static getInitialProps = async ({ Component, ctx }) => {
+    const { token } = parseCookies(ctx);
+    let pageProps = {};
+    if (token) {
+      pageProps.token = JSON.parse(token);
+    }
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return {
+      pageProps
+    };
+  };
+
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");

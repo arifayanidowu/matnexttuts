@@ -2,18 +2,49 @@ const next = require("next");
 const { parse } = require("url");
 const express = require("express");
 const passport = require("passport");
+const mongoose = require("mongoose");
+const helmet = require("helmet");
+const mongoSessionStore = require("connect-mongo");
+const compression = require("compression");
+const session = require("express-session");
+
+require("dotenv").config();
+require("./server/passport");
+
+const routes = require("./server/routes");
 
 const dev = process.env.NODE_ENV !== "producttion";
 const port = process.env.PORT || 3000;
+const ROOT_URL = dev ? `http://localhost:${port}` : process.env.PRODUCTION_URL;
 
 const app = next({ dev });
 
 const handle = app.getRequestHandler();
 
+const mongooseOptions = {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
+};
+
+mongoose
+  .connect(process.env.MONGODB_URI, mongooseOptions)
+  .then(() => {
+    console.log(`[MongoDB]: Connected to MongoDB successfully`);
+  })
+  .catch(err => {
+    console.log(`[MongoError]: Failed to connect to DB: ${err.message}`);
+  });
+
 app
   .prepare()
   .then(() => {
     const server = express();
+    if (!dev) {
+      server.use(helmet());
+      server.use(compression());
+    }
 
     server.use(express.json());
 
@@ -25,6 +56,32 @@ app
       handle(req, res);
     });
 
+    const MongoStore = mongoSessionStore(session);
+    const sessionConfig = {
+      name: "next-connect.sid",
+      // secret used for using signed cookies w/ the session
+      secret: process.env.SESSION_SECRET,
+      store: new MongoStore({
+        mongooseConnection: mongoose.connection,
+        ttl: 14 * 24 * 60 * 60 // save session for 14 days
+      }),
+      // forces the session to be saved back to the store
+      resave: false,
+      // don't save unmodified sessions
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 14 // expires in 14 days
+      }
+    };
+
+    if (!dev) {
+      sessionConfig.cookie.secure = true; // serve secure cookies in production environment
+      server.set("trust proxy", 1); // trust first proxy
+    }
+
+    server.use(session(sessionConfig));
+
     server.use(passport.initialize());
     server.use(passport.session());
 
@@ -33,6 +90,17 @@ app
       res.locals.user = req.user || null;
       next();
     });
+
+    /* apply routes from the "routes" folder */
+    server.use("/", routes);
+
+    /* Error handling from async / await functions */
+    server.use((err, req, res, next) => {
+      const { status = 500, message } = err;
+      res.status(status).json(message);
+      next();
+    });
+
     server.get("*", (req, res) => {
       handle(req, res);
     });

@@ -1,8 +1,13 @@
 import Layout from "../components/Layout";
+import SignupComponent from "../components/SignupComponent";
 
 class SignUp extends React.Component {
   render() {
-    return <Layout>SignUp</Layout>;
+    return (
+      <Layout>
+        <SignupComponent />
+      </Layout>
+    );
   }
 }
 

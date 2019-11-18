@@ -14,7 +14,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { Drawer, Button } from "@material-ui/core";
+import { Drawer, Button, Avatar } from "@material-ui/core";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
@@ -25,6 +25,8 @@ import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import Router, { useRouter } from "next/router";
 import Link from "next/link";
 import NProgress from "nprogress";
+import axios from "axios";
+import { handleLogOut } from "../lib/auth";
 
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
@@ -101,22 +103,42 @@ const useStyles = makeStyles(theme => ({
   },
   fullList: {
     width: "auto"
+  },
+  avatar: {
+    margin: 10
+  },
+  smallAvatar: {
+    width: "20px",
+    height: "20px"
+  },
+  flex: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   }
 }));
 
-const Navbar = () => {
+const Navbar = ({ id, name, avatar }) => {
   const classes = useStyles();
   const router = useRouter();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [state, setState] = React.useState({
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
     auth: false
   });
+
+  useEffect(() => {
+    if (id) {
+      setState(prevState => ({ ...prevState, auth: true }));
+    } else {
+      setState(prevState => ({ ...prevState, auth: false }));
+    }
+  }, [state.auth]);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -153,6 +175,11 @@ const Navbar = () => {
     setState({ ...state, [side]: open });
   };
 
+  const signOut = async () => {
+    await axios.get("/api/auth/signout");
+    handleLogOut();
+  };
+
   const sideList = side => (
     <div
       className={classes.list}
@@ -160,9 +187,21 @@ const Navbar = () => {
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
-      <Typography variant="h5" component="h1" style={{ padding: "20px" }}>
-        <LibraryBooksIcon /> RS LIBRARY
-      </Typography>
+      <div className={classes.flex}>
+        <Avatar
+          alt={name}
+          src={avatar}
+          className={classes.avatar}
+          style={{ marginLeft: "-5px" }}
+        />
+        <Typography
+          variant="h5"
+          component="h1"
+          style={{ padding: "20px", marginLeft: "-17px" }}
+        >
+          RS LIBRARY
+        </Typography>
+      </div>
       <Divider />
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
@@ -206,6 +245,11 @@ const Navbar = () => {
             </IconButton>
           )}
           <Link href="/">
+            <a className={classes.sectionMobile} style={{ color: "#fff" }}>
+              <LibraryBooksIcon />
+            </a>
+          </Link>
+          <Link href="/">
             <a
               className={classes.title}
               style={{
@@ -216,11 +260,7 @@ const Navbar = () => {
               RS Library
             </a>
           </Link>
-          <Link href="/">
-            <a className={classes.sectionMobile} style={{ color: "#fff" }}>
-              <LibraryBooksIcon />
-            </a>
-          </Link>
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {state.auth && (
@@ -238,21 +278,42 @@ const Navbar = () => {
                 />
               </div>
             )}
-            <Button
-              color={isActive("/signup") ? "secondary" : "inherit"}
-              onClick={() => router.push("/signup")}
-              style={{ fontWeight: "700" }}
-            >
-              Signup
-            </Button>
-            <Button
-              color={isActive("/login") ? "secondary" : "inherit"}
-              onClick={() => router.push("/login")}
-              style={{ fontWeight: "700" }}
-            >
-              Login
-            </Button>
+            {!state.auth ? (
+              <>
+                <Button
+                  color={isActive("/signup") ? "secondary" : "inherit"}
+                  onClick={() => router.push("/signup")}
+                  style={{ fontWeight: "700" }}
+                >
+                  Signup
+                </Button>
+                <Button
+                  color={isActive("/login") ? "secondary" : "inherit"}
+                  onClick={() => router.push("/login")}
+                  style={{ fontWeight: "700" }}
+                >
+                  Login
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  color={isActive("/signup") ? "secondary" : "inherit"}
+                  style={{ fontWeight: "700" }}
+                >
+                  Collection
+                </Button>
+                <Button
+                  color="inherit"
+                  style={{ fontWeight: "700" }}
+                  onClick={signOut}
+                >
+                  Logout
+                </Button>
+              </>
+            )}
           </div>
+
           <div className={classes.sectionMobile}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -264,15 +325,12 @@ const Navbar = () => {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
           </div>
+          {state.auth && (
+            <IconButton aria-label="Avatar">
+              <Avatar src={avatar} className={classes.avatar} alt={name} />
+            </IconButton>
+          )}
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
