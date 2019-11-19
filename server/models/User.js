@@ -25,7 +25,19 @@ const userSchema = new mongoose.Schema(
       default: "/images/profile-image.jpg"
     },
     following: [{ type: ObjectId, ref: "User" }],
-    followers: [{ type: ObjectId, ref: "User" }]
+    followers: [{ type: ObjectId, ref: "User" }],
+    role: {
+      type: String,
+      required: true,
+      default: "user",
+      enum: ["user", "admin", "root"]
+    },
+    department: {
+      type: String,
+      required: "Department is required",
+      trim: true,
+      lowercase: true
+    }
   },
   { timestamps: true }
 );

@@ -6,7 +6,9 @@ import {
   InputLabel,
   Input,
   Button,
-  IconButton
+  IconButton,
+  Select,
+  MenuItem
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import PersonIcon from "@material-ui/icons/Person";
@@ -14,12 +16,15 @@ import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 import { handleSignup } from "../lib/auth";
+import { departments } from "../lib/departments";
 
 const INITIAL_STATE = {
   name: "",
   email: "",
+  department: "",
   password: "",
   isLoading: false,
   showPassword: false,
@@ -34,11 +39,12 @@ export default function Signup() {
     const user = {
       name: state.name,
       email: state.email,
-      password: state.password
+      password: state.password,
+      department: state.department
     };
     let isValid = Object.values(user).every(el => Boolean(el));
     isValid ? setDisabled(false) : setDisabled(true);
-  }, [state.name, state.email, state.password]);
+  }, [state.name, state.email, state.password, state.department]);
 
   const handleChange = e => {
     const { target } = e;
@@ -61,6 +67,7 @@ export default function Signup() {
       const payload = {
         name: state.name,
         email: state.email,
+        department: state.department,
         password: state.password
       };
       await axios.post("/api/auth/signup", payload);
@@ -101,6 +108,23 @@ export default function Signup() {
             />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="department">Department</InputLabel>
+            <Select
+              value={state.department}
+              onChange={handleChange}
+              inputProps={{
+                name: "department",
+                id: "department"
+              }}
+            >
+              {departments.map((dept, i) => (
+                <MenuItem key={i} value={dept.name}>
+                  {dept.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
               name="password"
@@ -128,7 +152,13 @@ export default function Signup() {
             className={classes.submit}
             disabled={state.isLoading || disabled}
           >
-            {state.isLoading ? "Signing up..." : "Sign Up"}
+            {state.isLoading ? (
+              <span>
+                Signing up... <CircularProgress size="1rem" />
+              </span>
+            ) : (
+              <span>Sign Up</span>
+            )}
           </Button>
         </form>
       </Paper>

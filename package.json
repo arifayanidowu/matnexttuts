@@ -31,6 +31,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
     "react": "16.12.0",
+    "react-animate-on-scroll": "^2.1.5",
     "react-dom": "16.12.0",
     "react-jss": "^10.0.0",
     "react-material-ui-carousel": "^1.0.0"

@@ -12,9 +12,14 @@ import {
   Divider,
   Container,
   Card,
-  Button
+  Button,
+  CardMedia,
+  CardContent,
+  CardActionArea,
+  Icon
 } from "@material-ui/core";
 import Router, { useRouter } from "next/router";
+import ScrollAnimation from "react-animate-on-scroll";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,89 +57,97 @@ const useStyles = makeStyles(theme => ({
   },
   centeredBtn: {
     margin: "30px auto"
+  },
+  paddedInner: {
+    padding: "20px",
+    backgroundColor: theme.palette.common.black
+  },
+  cardGrid: {
+    display: "flex",
+    marginTop: "30px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column"
+    }
+  },
+  media: {
+    width: "50%",
+    height: "100%",
+    position: "relative",
+    "&::after": {
+      content: "",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      zIndex: 2,
+      backgroundImage:
+        "linear-gradient(to right, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.6) 100%)"
+    },
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      height: "50%"
+    }
+  },
+  container: {
+    margin: "30px auto"
+  },
+  shortDivider: {
+    width: "30px",
+    height: "3px",
+    borderRadius: theme.shape.borderRadius
   }
 }));
-
-const tileData = [
-  {
-    img: "/images/pile.jpg",
-    title: "Fantasy",
-    author: "author 1"
-  },
-  {
-    img: "/images/closeup.jpg",
-    title: "Suspense",
-    author: "author 2"
-  },
-  {
-    img: "/images/pile_books.jpg",
-    title: "Educational",
-    author: "author 3"
-  },
-  {
-    img: "/images/book-chapter-six.jpg",
-    title: "Wellness",
-    author: "author 4"
-  },
-  {
-    img: "/images/close-up-of-paper.jpg",
-    title: "Romance",
-    author: "author 5"
-  }
-];
 
 export default function Tile() {
   const classes = useStyles();
   const router = useRouter();
 
   return (
-    <Container>
-      <Typography
-        variant="body1"
-        component="h6"
-        color="textPrimary"
-        style={{ marginTop: "20px" }}
-      >
-        Discover
-      </Typography>
-      <div className={classes.root}>
-        <GridList className={classes.gridList} cols={2.5}>
-          {tileData.map((tile, i) => (
-            <GridListTile key={i}>
-              <img src={tile.img} alt={tile.title} />
-              <GridListTileBar
-                title={tile.title}
-                classes={{
-                  root: classes.titleBar,
-                  title: classes.title
-                }}
-                actionIcon={
-                  // <IconButton aria-label={`star ${tile.title}`}>
-                  //   <StarBorderIcon className={classes.title} />
-                  // </IconButton>
-                  <Button
-                    color="inherit"
-                    variant="contained"
-                    style={{ marginRight: "10px" }}
-                    onClick={() => router.replace("/signup")}
-                  >
-                    Explore <StarBorderIcon className={classes.title} />
-                  </Button>
-                }
-              />
-            </GridListTile>
-          ))}
-        </GridList>
-        <Button
-          className={classes.centeredBtn}
-          color="primary"
-          variant="contained"
-          size="large"
-          onClick={() => router.replace("/signup")}
-        >
-          sign up and Explore <ArrowForwardIcon fontSize="small" />
-        </Button>
-      </div>
+    <Container className={classes.container}>
+      <Typography color="textSecondary">Discover</Typography>
+      <Divider className={classes.shortDivider} />
+      <Card className={classes.cardGrid}>
+        <CardMedia
+          autoPlay
+          muted
+          loop
+          src="/videos/bookreading.mp4"
+          component="video"
+          className={classes.media}
+        />
+        <CardContent>
+          <ScrollAnimation animateIn="fadeInDown" delay={3}>
+            <Typography
+              variant="h5"
+              component="h1"
+              style={{ marginBottom: "20px" }}
+            >
+              Embrace the power of words
+            </Typography>
+          </ScrollAnimation>
+
+          <ScrollAnimation animateIn="fadeInUp" delay={4}>
+            <Typography color="textSecondary">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
+              nesciunt ullam saepe perspiciatis nisi repellat debitis magni ea,
+              quo, culpa vitae nulla tenetur eum quam omnis distinctio iure quis
+              est.
+            </Typography>
+          </ScrollAnimation>
+
+          <ScrollAnimation animateIn="fadeInUp">
+            <Button
+              color="primary"
+              variant="contained"
+              size="large"
+              style={{ marginTop: "20px" }}
+            >
+              Explore <ArrowForwardIcon />
+            </Button>
+          </ScrollAnimation>
+        </CardContent>
+      </Card>
     </Container>
   );
 }

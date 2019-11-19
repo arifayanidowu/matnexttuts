@@ -14,19 +14,21 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { Drawer, Button, Avatar } from "@material-ui/core";
+import { Drawer, Button, Avatar, Icon, Tooltip } from "@material-ui/core";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
+import Fade from "@material-ui/core/Fade";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import Router, { useRouter } from "next/router";
 import Link from "next/link";
 import NProgress from "nprogress";
 import axios from "axios";
 import { handleLogOut } from "../lib/auth";
+import SidebarNavList from "./SidebarNavList";
 
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
@@ -44,8 +46,8 @@ const useStyles = makeStyles(theme => ({
     textDecoration: "none",
     color: theme.palette.text,
     fontSize: theme.spacing(2.5),
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
+    // display: "none",
+    [theme.breakpoints.up("md")]: {
       display: "block"
     }
   },
@@ -132,6 +134,8 @@ const Navbar = ({ id, name, avatar }) => {
     auth: false
   });
 
+  const open = Boolean(anchorEl);
+
   useEffect(() => {
     if (id) {
       setState(prevState => ({ ...prevState, auth: true }));
@@ -147,12 +151,20 @@ const Navbar = ({ id, name, avatar }) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
   const isActive = path => {
     return router.pathname === path;
+  };
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
   };
 
   const handleMenuClose = () => {
@@ -176,6 +188,7 @@ const Navbar = ({ id, name, avatar }) => {
   };
 
   const signOut = async () => {
+    console.log("CLICKED");
     await axios.get("/api/auth/signout");
     handleLogOut();
   };
@@ -203,27 +216,7 @@ const Navbar = ({ id, name, avatar }) => {
         </Typography>
       </div>
       <Divider />
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+      <SidebarNavList />
     </div>
   );
   const menuId = "primary-search-account-menu";
@@ -244,11 +237,7 @@ const Navbar = ({ id, name, avatar }) => {
               <MenuIcon />
             </IconButton>
           )}
-          <Link href="/">
-            <a className={classes.sectionMobile} style={{ color: "#fff" }}>
-              <LibraryBooksIcon />
-            </a>
-          </Link>
+
           <Link href="/">
             <a
               className={classes.title}
@@ -262,7 +251,7 @@ const Navbar = ({ id, name, avatar }) => {
           </Link>
 
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
+          <div>
             {state.auth && (
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
@@ -278,7 +267,7 @@ const Navbar = ({ id, name, avatar }) => {
                 />
               </div>
             )}
-            {!state.auth ? (
+            {!state.auth && (
               <>
                 <Button
                   color={isActive("/signup") ? "secondary" : "inherit"}
@@ -295,52 +284,63 @@ const Navbar = ({ id, name, avatar }) => {
                   Login
                 </Button>
               </>
-            ) : (
-              <>
-                <Button
-                  color={isActive("/signup") ? "secondary" : "inherit"}
-                  style={{ fontWeight: "700" }}
-                >
-                  Collection
-                </Button>
-                <Button
-                  color="inherit"
-                  style={{ fontWeight: "700" }}
-                  onClick={signOut}
-                >
-                  Logout
-                </Button>
-              </>
             )}
           </div>
 
-          <div className={classes.sectionMobile}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </div>
           {state.auth && (
-            <IconButton aria-label="Avatar">
-              <Avatar src={avatar} className={classes.avatar} alt={name} />
-            </IconButton>
+            <>
+              <div>
+                <IconButton aria-label="show 3 new collections" color="inherit">
+                  <Badge badgeContent={3} color="secondary">
+                    <Icon className="fas fa-shopping-bag" />
+                  </Badge>
+                </IconButton>
+              </div>
+              <div className={classes.sectionDesktop}>
+                <IconButton aria-label="Avatar" onClick={handleClick}>
+                  <Avatar src={avatar} className={classes.avatar} alt={name} />
+                </IconButton>
+                <Menu
+                  id="fade-menu-desktop"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
+                >
+                  <MenuItem>Profile</MenuItem>
+                  <MenuItem>My account</MenuItem>
+                  <MenuItem>My Collections</MenuItem>
+                  <MenuItem onClick={signOut}>Logout</MenuItem>
+                </Menu>
+              </div>
+
+              <div className={classes.sectionMobile}>
+                <IconButton
+                  aria-label="show more"
+                  aria-haspopup="true"
+                  aria-controls={mobileMenuId}
+                  onClick={handleClick}
+                >
+                  <MoreIcon />
+                </IconButton>
+
+                <Menu
+                  id="fade-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={open}
+                  onClose={handleClose}
+                  TransitionComponent={Fade}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleClose}>My Collections</MenuItem>
+                  <MenuItem onClick={signOut}>Logout</MenuItem>
+                </Menu>
+              </div>
+            </>
           )}
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-haspopup="true"
-              aria-controls={mobileMenuId}
-              onClick={handleMobileMenuOpen}
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
         </Toolbar>
       </AppBar>
       {state.auth && (

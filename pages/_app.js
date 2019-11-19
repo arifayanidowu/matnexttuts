@@ -11,14 +11,19 @@ export default class MyApp extends App {
   static getInitialProps = async ({ Component, ctx }) => {
     const { token } = parseCookies(ctx);
     let pageProps = {};
-    if (token) {
-      pageProps.token = JSON.parse(token);
-    }
-
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
+    // if (!token) {
+    //   redirectUser(ctx, "/login");
+    //   // destroyCookie(ctx, "token");
+    // } else {
+    //   pageProps.token = JSON.parse(token);
+    // }
 
+    if (token) {
+      pageProps.token = JSON.parse(token);
+    }
     return {
       pageProps
     };

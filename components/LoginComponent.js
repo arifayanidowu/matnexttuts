@@ -17,6 +17,8 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 import { handleLogin } from "../lib/auth";
+import Link from "next/link";
+import { fade } from "@material-ui/core/styles";
 
 const INITIAL_STATE = {
   email: "",
@@ -123,6 +125,9 @@ export default function Login() {
               <span>Login</span>
             )}
           </Button>
+          <Link href="/">
+            <a className={classes.forgotPass}>Forgot your password?</a>
+          </Link>
         </form>
       </Paper>
     </div>
@@ -163,5 +168,10 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center"
+  },
+  forgotPass: {
+    float: "right",
+    display: "inline-block",
+    marginTop: "7px"
   }
 }));

@@ -2,6 +2,7 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import { Container, Typography, Fab, Button } from "@material-ui/core";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useRouter } from "next/router";
+import ScrollAnimation from "react-animate-on-scroll";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,36 +37,29 @@ const HeroContent = () => {
   const classes = useStyles();
   const router = useRouter();
 
-  var items = [
-    {
-      name: "Random Name #1",
-      description: "Probably the most random thing you have ever seen!"
-    },
-    {
-      name: "Random Name #2",
-      description: "Hello World!"
-    }
-  ];
-
   return (
     <div className={classes.root}>
       <div>
-        <Typography variant="h3" component="h1">
-          Welcome to RS Library
-        </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          className={classes.margin}
-          onClick={() => router.replace("/signup")}
-        >
-          <ArrowForwardIosIcon
-            fontSize="small"
-            style={{ marginRight: "10px" }}
-          />{" "}
-          Get Started
-        </Button>
+        <ScrollAnimation animateIn="fadeInDown" delay={3}>
+          <Typography variant="h3" component="h1">
+            Welcome to RS Library
+          </Typography>
+        </ScrollAnimation>
+        <ScrollAnimation animateIn="fadeInUp" delay={4}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            className={classes.margin}
+            onClick={() => router.replace("/signup")}
+          >
+            <ArrowForwardIosIcon
+              fontSize="small"
+              style={{ marginRight: "10px" }}
+            />{" "}
+            Get Started
+          </Button>
+        </ScrollAnimation>
       </div>
     </div>
   );

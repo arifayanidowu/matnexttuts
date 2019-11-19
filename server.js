@@ -94,6 +94,10 @@ app
     /* apply routes from the "routes" folder */
     server.use("/", routes);
 
+    /** Set Cookie Header for SameSite */
+    server.set("SameSite", "None");
+    server.set("Secure", true);
+
     /* Error handling from async / await functions */
     server.use((err, req, res, next) => {
       const { status = 500, message } = err;

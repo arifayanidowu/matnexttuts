@@ -2,8 +2,8 @@ const User = require("../models/User");
 const passport = require("passport");
 
 exports.signUp = async (req, res) => {
-  const { name, email, password } = req.body;
-  const user = await new User({ name, email, password });
+  const { name, email, password, department } = req.body;
+  const user = await new User({ name, email, password, department });
   await User.register(user, password, (err, user) => {
     if (err) {
       return res.status(500).json(err.message);
