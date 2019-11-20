@@ -34,6 +34,14 @@ export default class MyApp extends App {
         };
         const response = await axios.get(`${baseUrl}/api/auth/`, payload);
         const user = response.data;
+
+        if (user) {
+          const isLoggedIn =
+            ctx.pathname === "/login" || ctx.pathname === "/signup";
+          if (isLoggedIn) {
+            redirectUser(ctx, "/");
+          }
+        }
         pageProps.user = user;
       } catch (error) {
         console.log(error.message);

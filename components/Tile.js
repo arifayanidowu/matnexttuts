@@ -67,13 +67,13 @@ const useStyles = makeStyles(theme => ({
     marginTop: "30px",
     marginLeft: "auto",
     marginRight: "auto",
+    // height: "100%",
     [theme.breakpoints.down("md")]: {
       flexDirection: "column"
     }
   },
   media: {
     width: "50%",
-    height: "100%",
     position: "relative",
     "&::after": {
       content: "",
@@ -96,10 +96,15 @@ const useStyles = makeStyles(theme => ({
     width: "30px",
     height: "3px",
     borderRadius: theme.shape.borderRadius
+  },
+  btn: {
+    // [theme.breakpoints.down("md")]: {
+    //   display: "block"
+    // }
   }
 }));
 
-export default function Tile() {
+export default function Tile({ _id }) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -107,48 +112,96 @@ export default function Tile() {
     <Container className={classes.container}>
       <Typography color="textSecondary">Discover</Typography>
       <Divider className={classes.shortDivider} />
-      <Card className={classes.cardGrid}>
-        <CardMedia
-          autoPlay
-          muted
-          loop
-          src="/videos/bookreading.mp4"
-          component="video"
-          className={classes.media}
-        />
-        <CardContent>
-          <ScrollAnimation animateIn="fadeInDown" delay={3}>
-            <Typography
-              variant="h5"
-              component="h1"
-              style={{ marginBottom: "20px" }}
-              gutterBottom
-            >
-              Embrace the power of words
-            </Typography>
-          </ScrollAnimation>
-
-          <ScrollAnimation animateIn="fadeInUp" delay={4}>
-            <Typography color="textSecondary" gutterBottom>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
-              nesciunt ullam saepe perspiciatis nisi repellat debitis magni ea,
-              quo, culpa vitae nulla tenetur eum quam omnis distinctio iure quis
-              est.
-            </Typography>
-          </ScrollAnimation>
-
-          <ScrollAnimation animateIn="fadeInUp">
-            <Button
-              color="primary"
-              variant="contained"
-              size="large"
-              style={{ marginTop: "20px" }}
-            >
-              Explore <ArrowForwardIcon />
-            </Button>
-          </ScrollAnimation>
-        </CardContent>
-      </Card>
+      {_id ? (
+        <AuthContent classes={classes} router={router} />
+      ) : (
+        <UnAuthContent classes={classes} router={router} />
+      )}
     </Container>
   );
 }
+
+const AuthContent = ({ classes, router }) => (
+  <Card className={classes.cardGrid}>
+    <CardMedia
+      image="/images/the-polaroid-book.jpg"
+      alt="polaroid"
+      className={classes.media}
+    />
+    <CardContent>
+      <ScrollAnimation animateIn="fadeInDown" delay={3}>
+        <Typography
+          variant="h5"
+          component="h1"
+          style={{ marginBottom: "20px" }}
+          gutterBottom
+        >
+          Illuminate the mind
+        </Typography>
+      </ScrollAnimation>
+
+      <ScrollAnimation animateIn="fadeInUp" delay={4}>
+        <Typography color="textSecondary" gutterBottom>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nesciunt
+          ullam saepe perspiciatis nisi repellat debitis magni ea, quo, culpa
+          vitae nulla tenetur eum quam omnis distinctio iure quis est.
+        </Typography>
+      </ScrollAnimation>
+      <Button
+        color="primary"
+        variant="contained"
+        size="large"
+        style={{ marginTop: "20px" }}
+        onClick={() => router.replace("/books")}
+        className={classes.btn}
+      >
+        Explore
+        <ArrowForwardIcon />
+      </Button>
+    </CardContent>
+  </Card>
+);
+
+const UnAuthContent = ({ classes, router }) => (
+  <Card className={classes.cardGrid}>
+    <CardMedia
+      autoPlay
+      muted
+      loop
+      src="/videos/bookreading.mp4"
+      component="video"
+      className={classes.media}
+    />
+    <CardContent>
+      <ScrollAnimation animateIn="fadeInDown" delay={3}>
+        <Typography
+          variant="h5"
+          component="h1"
+          style={{ marginBottom: "20px" }}
+          gutterBottom
+        >
+          Embrace the power of words
+        </Typography>
+      </ScrollAnimation>
+
+      <ScrollAnimation animateIn="fadeInUp" delay={4}>
+        <Typography color="textSecondary" gutterBottom>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nesciunt
+          ullam saepe perspiciatis nisi repellat debitis magni ea, quo, culpa
+          vitae nulla tenetur eum quam omnis distinctio iure quis est.
+        </Typography>
+      </ScrollAnimation>
+      <Button
+        color="primary"
+        variant="contained"
+        size="large"
+        style={{ marginTop: "20px" }}
+        onClick={() => router.replace("/signup")}
+        className={classes.btn}
+      >
+        Explore
+        <ArrowForwardIcon />
+      </Button>
+    </CardContent>
+  </Card>
+);

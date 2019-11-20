@@ -188,7 +188,6 @@ const Navbar = ({ id, name, avatar }) => {
   };
 
   const signOut = async () => {
-    console.log("CLICKED");
     await axios.get("/api/auth/signout");
     handleLogOut();
   };
@@ -290,7 +289,11 @@ const Navbar = ({ id, name, avatar }) => {
           {state.auth && (
             <>
               <div>
-                <IconButton aria-label="show 3 new collections" color="inherit">
+                <IconButton
+                  aria-label="show 3 new collections"
+                  color="inherit"
+                  onClick={() => router.push(`/bookcollections?id=${id}`)}
+                >
                   <Badge badgeContent={3} color="secondary">
                     <Icon className="fas fa-shopping-bag" />
                   </Badge>
@@ -308,9 +311,18 @@ const Navbar = ({ id, name, avatar }) => {
                   onClose={handleClose}
                   TransitionComponent={Fade}
                 >
-                  <MenuItem>Profile</MenuItem>
-                  <MenuItem>My account</MenuItem>
-                  <MenuItem>My Collections</MenuItem>
+                  <MenuItem onClick={() => router.push(`/profile?id=${id}`)}>
+                    Profile
+                  </MenuItem>
+
+                  <MenuItem onClick={() => router.push(`/account?id=${id}`)}>
+                    My account
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => router.push(`/bookcollections?id=${id}`)}
+                  >
+                    My Collections
+                  </MenuItem>
                   <MenuItem onClick={signOut}>Logout</MenuItem>
                 </Menu>
               </div>
@@ -333,9 +345,17 @@ const Navbar = ({ id, name, avatar }) => {
                   onClose={handleClose}
                   TransitionComponent={Fade}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>My Collections</MenuItem>
+                  <MenuItem onClick={() => router.replace(`/profile?id=${id}`)}>
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={() => router.replace(`/account?id=${id}`)}>
+                    My account
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => router.replace(`/bookcollections?id=${id}`)}
+                  >
+                    My Collections
+                  </MenuItem>
                   <MenuItem onClick={signOut}>Logout</MenuItem>
                 </Menu>
               </div>
