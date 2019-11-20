@@ -126,7 +126,7 @@ export default function Login() {
             )}
           </Button>
           <Link href="/">
-            <a className={classes.forgotPass}>Forgot your password?</a>
+            <a className={classes.forgotPass}>Forgot password?</a>
           </Link>
         </form>
       </Paper>
