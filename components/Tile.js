@@ -122,13 +122,14 @@ export default function Tile() {
               variant="h5"
               component="h1"
               style={{ marginBottom: "20px" }}
+              gutterBottom
             >
               Embrace the power of words
             </Typography>
           </ScrollAnimation>
 
           <ScrollAnimation animateIn="fadeInUp" delay={4}>
-            <Typography color="textSecondary">
+            <Typography color="textSecondary" gutterBottom>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
               nesciunt ullam saepe perspiciatis nisi repellat debitis magni ea,
               quo, culpa vitae nulla tenetur eum quam omnis distinctio iure quis
