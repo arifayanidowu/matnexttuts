@@ -17,6 +17,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Snackbar from "@material-ui/core/Snackbar";
+import Fade from "@material-ui/core/Fade";
 import axios from "axios";
 import { handleSignup } from "../lib/auth";
 import { departments } from "../lib/departments";
@@ -28,7 +30,9 @@ const INITIAL_STATE = {
   password: "",
   isLoading: false,
   showPassword: false,
-  error: ""
+  error: "",
+  openError: false,
+  Transition: Fade
 };
 
 export default function Signup() {
@@ -60,6 +64,11 @@ export default function Signup() {
   };
   const classes = useStyles();
 
+  const showError = err => {
+    const error = (err.response && err.response.data) || err.message;
+    setState({ error, openError: true, isLoading: false });
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -72,10 +81,16 @@ export default function Signup() {
       };
       await axios.post("/api/auth/signup", payload);
       handleSignup();
-    } catch (error) {
-      console.error(error);
-      setState(prevState => ({ ...prevState, isLoading: false, error }));
+    } catch (err) {
+      showError(err);
     }
+  };
+
+  const handleClose = () => {
+    setState({
+      ...state,
+      openError: false
+    });
   };
 
   return (
@@ -161,6 +176,22 @@ export default function Signup() {
             )}
           </Button>
         </form>
+
+        {state.error && (
+          <Snackbar
+            open={state.openError}
+            onClose={handleClose}
+            TransitionComponent={state.Transition}
+            ContentProps={{
+              "aria-describedby": "message-id"
+            }}
+            message={
+              <span id="message-id" style={{ color: "red" }}>
+                {state.error}
+              </span>
+            }
+          />
+        )}
       </Paper>
     </div>
   );

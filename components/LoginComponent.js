@@ -19,6 +19,8 @@ import axios from "axios";
 import { handleLogin } from "../lib/auth";
 import Link from "next/link";
 import { fade } from "@material-ui/core/styles";
+import Snackbar from "@material-ui/core/Snackbar";
+import Fade from "@material-ui/core/Fade";
 
 const INITIAL_STATE = {
   email: "",
@@ -30,7 +32,12 @@ export default function Login() {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [snack, setSnack] = useState({
+    open: false,
+    Transition: Fade,
+    openError: false,
+    error: ""
+  });
 
   useEffect(() => {
     const isUser = Object.values(state).every(el => Boolean(el));
@@ -50,22 +57,35 @@ export default function Login() {
     event.preventDefault();
   };
 
+  const showError = err => {
+    const error = (err.response && err.response.data) || err.message;
+    setSnack({ error, openError: true });
+    setLoading(false);
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
       setLoading(true);
-      setError("");
+      setSnack({
+        error: ""
+      });
       const payload = {
         email: state.email,
         password: state.password
       };
       const response = await axios.post("/api/auth/signin", payload);
       handleLogin(response.data);
-    } catch (error) {
-      console.error(error);
-      setError(error.message);
-      setLoading(false);
+    } catch (err) {
+      showError(err);
     }
+  };
+
+  const handleClose = () => {
+    setSnack({
+      ...snack,
+      openError: false
+    });
   };
 
   const classes = useStyles();
@@ -78,7 +98,21 @@ export default function Login() {
         <Typography variant="h5" component="h1">
           Login
         </Typography>
-
+        {snack.error && (
+          <Snackbar
+            open={snack.openError}
+            onClose={handleClose}
+            TransitionComponent={snack.Transition}
+            ContentProps={{
+              "aria-describedby": "message-id"
+            }}
+            message={
+              <span id="message-id" style={{ color: "red" }}>
+                {snack.error}
+              </span>
+            }
+          />
+        )}
         <form onSubmit={handleSubmit} className={classes.form}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email</InputLabel>

@@ -301,8 +301,9 @@ const Navbar = ({ id, name, avatar }) => {
               </div>
               <div className={classes.sectionDesktop}>
                 <IconButton aria-label="Avatar" onClick={handleClick}>
-                  <Avatar src={avatar} className={classes.avatar} alt={name} />
+                  <Avatar src={avatar} className={classes.avatar} alt={name} />{" "}
                 </IconButton>
+
                 <Menu
                   id="fade-menu-desktop"
                   anchorEl={anchorEl}
