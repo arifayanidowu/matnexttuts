@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "node start",
     "heroku-postbuild": "next build"
   },
   "dependencies": {
