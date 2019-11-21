@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "build": "next build",
-    "start": "set NODE_ENV=production && ode server.js",
+    "start": "set NODE_ENV=production && node server.js",
     "heroku-postbuild": "set NODE_ENV=production && next build"
   },
   "dependencies": {
