@@ -14,7 +14,7 @@ require("./server/passport");
 const routes = require("./server/routes");
 
 const dev = process.env.NODE_ENV !== "producttion";
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const ROOT_URL = dev ? `http://localhost:${port}` : process.env.PRODUCTION_URL;
 
 const app = next({ dev });
@@ -129,9 +129,9 @@ app
       handle(req, res);
     });
 
-    server.listen(port, err => {
+    server.listen(PORT, err => {
       if (err) throw err;
-      console.log(`Server listening on ${port}`);
+      console.log(`Server listening on ${PORT}`);
     });
   })
   .catch(err => console.error(err));
