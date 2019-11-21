@@ -34,91 +34,94 @@ Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
-const useStyles = makeStyles(theme => ({
-  grow: {
-    flexGrow: 1
-  },
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
-  title: {
-    textTransform: "uppercase",
-    textDecoration: "none",
-    color: theme.palette.text,
-    fontSize: theme.spacing(2.5),
-    // display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "block"
-    }
-  },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+const useStyles = makeStyles(
+  theme => ({
+    grow: {
+      flexGrow: 1
     },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-      display: "block"
+    menuButton: {
+      marginRight: theme.spacing(2)
+    },
+    title: {
+      textTransform: "uppercase",
+      textDecoration: "none",
+      color: theme.palette.text,
+      fontSize: theme.spacing(2.5),
+      // display: "none",
+      [theme.breakpoints.up("md")]: {
+        display: "block"
+      }
+    },
+    search: {
+      position: "relative",
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      "&:hover": {
+        backgroundColor: fade(theme.palette.common.white, 0.25)
+      },
+      marginRight: theme.spacing(2),
+      marginLeft: 0,
+      width: "100%",
+      display: "none",
+      [theme.breakpoints.up("sm")]: {
+        marginLeft: theme.spacing(3),
+        width: "auto",
+        display: "block"
+      }
+    },
+    searchIcon: {
+      width: theme.spacing(7),
+      height: "100%",
+      position: "absolute",
+      pointerEvents: "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    inputRoot: {
+      color: "inherit"
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 7),
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("md")]: {
+        width: 200
+      }
+    },
+    sectionDesktop: {
+      display: "none",
+      [theme.breakpoints.up("md")]: {
+        display: "flex"
+      }
+    },
+    sectionMobile: {
+      display: "flex",
+      [theme.breakpoints.up("md")]: {
+        display: "none"
+      }
+    },
+    list: {
+      width: 250
+    },
+    fullList: {
+      width: "auto"
+    },
+    avatar: {
+      margin: 10
+    },
+    smallAvatar: {
+      width: "20px",
+      height: "20px"
+    },
+    flex: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     }
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  inputRoot: {
-    color: "inherit"
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: 200
-    }
-  },
-  sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex"
-    }
-  },
-  sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none"
-    }
-  },
-  list: {
-    width: 250
-  },
-  fullList: {
-    width: "auto"
-  },
-  avatar: {
-    margin: 10
-  },
-  smallAvatar: {
-    width: "20px",
-    height: "20px"
-  },
-  flex: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-}));
+  }),
+  { name: "HookGlobalStyles", index: 2 }
+);
 
 const Navbar = ({ id, name, avatar }) => {
   const classes = useStyles();
@@ -241,11 +244,11 @@ const Navbar = ({ id, name, avatar }) => {
 
           <Link href="/">
             <a
-            // className={classes.title}
-            // style={{
-            //   color: isActive("/") ? "#009688" : "#fff",
-            //   fontWeight: "700"
-            // }}
+              className={classes.title}
+              style={{
+                color: isActive("/") ? "#009688" : "#fff",
+                fontWeight: "700"
+              }}
             >
               RS Library
             </a>
