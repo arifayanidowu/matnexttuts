@@ -32,10 +32,7 @@ export default class MyApp extends App {
         const payload = {
           headers: { authorization: "Bearer ".concat(token) }
         };
-        const response = await axios.get(
-          `http://localhost:3000/api/auth/`,
-          payload
-        );
+        const response = await axios.get(`${baseUrl}/api/auth/`, payload);
         const user = response.data;
 
         const isLoggedIn =
