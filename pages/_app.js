@@ -32,7 +32,10 @@ export default class MyApp extends App {
         const payload = {
           headers: { authorization: "Bearer ".concat(token) }
         };
-        const response = await axios.get(`${baseUrl}/api/auth/`, payload);
+        const response = await axios.get(
+          `http://localhost:3000/api/auth/`,
+          payload
+        );
         const user = response.data;
 
         const isLoggedIn =
@@ -59,10 +62,10 @@ export default class MyApp extends App {
 
   componentDidMount() {
     //Remove the server-side injected CSS.
-    // const jssStyles = document.querySelector("#jss-server-side");
-    // if (jssStyles) {
-    //   jssStyles.parentElement.removeChild(jssStyles);
-    // }
+    const jssStyles = document.querySelector("#jss-server-side");
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
   }
 
   render() {
