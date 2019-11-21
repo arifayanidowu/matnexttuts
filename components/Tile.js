@@ -160,12 +160,17 @@ const AuthContent = ({ classes, router }) => (
 
 const UnAuthContent = ({ classes, router }) => (
   <Card className={classes.cardGrid}>
-    <CardMedia
+    {/* <CardMedia
       autoPlay
       muted
       loop
       src="/videos/bookreading.mp4"
       component="video"
+      className={classes.media}
+    /> */}
+    <CardMedia
+      image="/images/book-chapter-seven.jpg"
+      alt="Book Chapter Seven"
       className={classes.media}
     />
     <CardContent>
