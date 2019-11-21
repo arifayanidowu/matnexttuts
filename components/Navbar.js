@@ -44,8 +44,9 @@ const useStyles = makeStyles(theme => ({
   titleNav: {
     textTransform: "uppercase",
     textDecoration: "none",
-    color: theme.palette.text,
+    color: "#fff",
     fontSize: theme.spacing(2.5),
+    fontWeight: "900",
     // display: "none",
     [theme.breakpoints.up("md")]: {
       display: "block"

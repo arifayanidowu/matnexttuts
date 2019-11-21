@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 const Layout = ({ children, _id, name, avatar }) => {
   return (
     <>
-      {/* <Navbar id={_id} name={name} avatar={avatar} /> */}
+      <Navbar id={_id} name={name} avatar={avatar} />
       {children}
     </>
   );
