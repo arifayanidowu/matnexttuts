@@ -90,17 +90,13 @@ const useStyles = makeStyles(theme => ({
     }
   },
   container: {
-    margin: "30px auto"
+    margin: "80px auto",
+    height: "40vh"
   },
   shortDivider: {
-    width: "30px",
+    width: "15px",
     height: "3px",
     borderRadius: theme.shape.borderRadius
-  },
-  btn: {
-    // [theme.breakpoints.down("md")]: {
-    //   display: "block"
-    // }
   }
 }));
 

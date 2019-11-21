@@ -1,10 +1,7 @@
-import { parseCookies, destroyCookie } from "nookies";
-import axios from "axios";
 import Layout from "../components/Layout";
 import HeroContent from "../components/HeroContent";
 import Tile from "../components/Tile";
-import { redirectUser } from "../lib/auth";
-import baseUrl from "../lib/baseUrl";
+import SectionContent from "../components/SectionContent";
 
 class Index extends React.Component {
   render() {
@@ -14,6 +11,7 @@ class Index extends React.Component {
       <Layout {...user}>
         <HeroContent {...user} />
         <Tile {...user} />
+        {user && <SectionContent {...user} />}
       </Layout>
     );
   }

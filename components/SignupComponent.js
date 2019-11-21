@@ -20,6 +20,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Snackbar from "@material-ui/core/Snackbar";
 import Fade from "@material-ui/core/Fade";
 import axios from "axios";
+import Link from "next/link";
 import { handleSignup } from "../lib/auth";
 import { departments } from "../lib/departments";
 
@@ -175,6 +176,11 @@ export default function Signup() {
               <span>Sign Up</span>
             )}
           </Button>
+          <Link href="/login">
+            <a className={classes.loginLink}>
+              Already have an account? Try Login in
+            </a>
+          </Link>
         </form>
 
         {state.error && (
@@ -226,5 +232,9 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     marginTop: theme.spacing(2)
+  },
+  loginLink: {
+    marginTop: 10,
+    display: "block"
   }
 }));

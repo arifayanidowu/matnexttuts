@@ -53,6 +53,11 @@ const useStyles = makeStyles(theme => ({
   },
   iconMargin: {
     color: theme.palette.grey
+  },
+  quote: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.8rem"
+    }
   }
 }));
 
@@ -75,8 +80,8 @@ const HeroContent = ({ _id }) => {
 const AuthContent = ({ classes, router }) => (
   <div>
     <ScrollAnimation animateIn="fadeInDown" delay={3}>
-      <Typography variant="h3" component="h1">
-        <blockquote>
+      <blockquote>
+        <Typography variant="h3" component="h1" className={classes.quote}>
           <Icon
             className={clsx("fas fa-quote-left", {
               [classes.iconMargin]: true
@@ -91,8 +96,8 @@ const AuthContent = ({ classes, router }) => (
             })}
             fontSize="small"
           />
-        </blockquote>
-      </Typography>
+        </Typography>
+      </blockquote>
       <Typography
         variant="subtitle1"
         component="h3"

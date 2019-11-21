@@ -204,17 +204,19 @@ const Navbar = ({ id, name, avatar }) => {
           alt={name}
           src={avatar}
           className={classes.avatar}
-          style={{ marginLeft: "-5px" }}
+          style={{ marginLeft: "-75px" }}
         />
         <Typography
           variant="h5"
           component="h1"
-          style={{ padding: "20px", marginLeft: "-17px" }}
+          style={{ padding: "20px", marginLeft: "-15px" }}
         >
-          RS LIBRARY
+          <span style={{ textDecoration: "capitalize" }}>
+            {name.charAt(0).toUpperCase() + name.substring(1)}
+          </span>
         </Typography>
       </div>
-      <Divider />
+      <Divider light />
       <SidebarNavList />
     </div>
   );
@@ -241,7 +243,7 @@ const Navbar = ({ id, name, avatar }) => {
             <a
               className={classes.title}
               style={{
-                color: isActive("/") ? "#ccc" : "#fff",
+                color: isActive("/") ? "#009688" : "#fff",
                 fontWeight: "700"
               }}
             >

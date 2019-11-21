@@ -159,9 +159,14 @@ export default function Login() {
               <span>Login</span>
             )}
           </Button>
-          <Link href="/">
-            <a className={classes.forgotPass}>Forgot password?</a>
-          </Link>
+          <div className={classes.gridIt}>
+            <Link href="/signup">
+              <a>Don't have an account? Sign up</a>
+            </Link>
+            <Link href="/forgotpassword">
+              <a>Forgot password?</a>
+            </Link>
+          </div>
         </form>
       </Paper>
     </div>
@@ -207,5 +212,10 @@ const useStyles = makeStyles(theme => ({
     float: "right",
     display: "inline-block",
     marginTop: "7px"
+  },
+  gridIt: {
+    display: "flex",
+    justifyContent: "space-around",
+    marginTop: 20
   }
 }));

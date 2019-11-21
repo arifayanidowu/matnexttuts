@@ -66,7 +66,7 @@ export default function SidebarNavList() {
             </ListItemIcon>
             <ListItemText primary="User Management" />
           </ListItem>
-          <Divider />
+          <Divider light />
           <ListItem button>
             <ListItemIcon>
               <SettingsIcon />

@@ -37,7 +37,9 @@ export default class MyApp extends App {
 
         if (user) {
           const isLoggedIn =
-            ctx.pathname === "/login" || ctx.pathname === "/signup";
+            ctx.pathname === "/login" ||
+            ctx.pathname === "/signup" ||
+            ctx.pathname === "/forgotpassword";
           if (isLoggedIn) {
             redirectUser(ctx, "/");
           }
