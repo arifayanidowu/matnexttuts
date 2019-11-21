@@ -124,7 +124,7 @@ const AuthContent = ({ classes, router }) => (
 const UnAuthContent = ({ classes, router }) => (
   <div>
     <ScrollAnimation animateIn="fadeInDown" delay={3}>
-      <Typography variant="h3" component="h1">
+      <Typography variant="h3" component="h1" gutterBottom>
         Welcome to RS Library
       </Typography>
     </ScrollAnimation>

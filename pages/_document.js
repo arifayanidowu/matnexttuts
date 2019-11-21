@@ -4,6 +4,14 @@ import { ServerStyleSheets } from "@material-ui/core/styles";
 import theme from "../lib/theme";
 
 export default class MyDocument extends Document {
+  componentDidMount() {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector("#jss-server-side");
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }
+
   render() {
     return (
       <html lang="en">
