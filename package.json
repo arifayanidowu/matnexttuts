@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "nodemon server.js",
     "build": "next build",
-    "start": "set NODE_ENV=production && node server.js",
-    "heroku-postbuild": "set NODE_ENV=production && next build"
+    "start": "node server.js",
+    "heroku-postbuild": "next build"
   },
   "dependencies": {
     "@material-ui/core": "^4.6.1",
