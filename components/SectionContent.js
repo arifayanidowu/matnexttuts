@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     justifyItems: "center",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
-      marginTop: "60%"
+      marginTop: "40%"
     }
   },
   card: {
