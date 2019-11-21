@@ -46,8 +46,6 @@
     "react-material-ui-carousel": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.7.0",
-    "babel-plugin-styled-components": "^1.10.6",
     "nodemon": "^1.19.4"
   }
 }

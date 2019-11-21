@@ -32,14 +32,14 @@ export default class MyApp extends App {
         const payload = {
           headers: { authorization: "Bearer ".concat(token) }
         };
-        const response = await axios.get(`/api/auth/`, payload);
+        const response = await axios.get(`${baseUrl}/api/auth/`, payload);
         const user = response.data;
 
+        const isLoggedIn =
+          ctx.pathname === "/login" ||
+          ctx.pathname === "/signup" ||
+          ctx.pathname === "/forgotpassword";
         if (user) {
-          const isLoggedIn =
-            ctx.pathname === "/login" ||
-            ctx.pathname === "/signup" ||
-            ctx.pathname === "/forgotpassword";
           if (isLoggedIn) {
             redirectUser(ctx, "/");
           }
@@ -58,7 +58,7 @@ export default class MyApp extends App {
   };
 
   componentDidMount() {
-    // Remove the server-side injected CSS.
+    //Remove the server-side injected CSS.
     // const jssStyles = document.querySelector("#jss-server-side");
     // if (jssStyles) {
     //   jssStyles.parentElement.removeChild(jssStyles);

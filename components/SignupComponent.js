@@ -23,6 +23,7 @@ import axios from "axios";
 import Link from "next/link";
 import { handleSignup } from "../lib/auth";
 import { departments } from "../lib/departments";
+import baseUrl from "../lib/baseUrl";
 
 const INITIAL_STATE = {
   name: "",
@@ -80,7 +81,7 @@ export default function Signup() {
         department: state.department,
         password: state.password
       };
-      await axios.post("/api/auth/signup", payload);
+      await axios.post(`${baseUrl}/api/auth/signup`, payload);
       handleSignup();
     } catch (err) {
       showError(err);
