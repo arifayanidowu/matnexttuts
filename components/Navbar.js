@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -25,6 +24,7 @@ import Fade from "@material-ui/core/Fade";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import Router, { useRouter } from "next/router";
 import Link from "next/link";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import NProgress from "nprogress";
 import axios from "axios";
 import { handleLogOut } from "../lib/auth";
