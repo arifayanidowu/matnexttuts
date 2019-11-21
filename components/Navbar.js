@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   menuButton: {
     marginRight: theme.spacing(2)
   },
-  title: {
+  titleNav: {
     textTransform: "uppercase",
     textDecoration: "none",
     color: theme.palette.text,
@@ -240,7 +240,7 @@ const Navbar = ({ id, name, avatar }) => {
           )}
 
           <Link href="/">
-            <a className={classes.title}>RS Library</a>
+            <a className={classes.titleNav}>RS Library</a>
           </Link>
 
           <div className={classes.grow} />
