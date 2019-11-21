@@ -241,11 +241,11 @@ const Navbar = ({ id, name, avatar }) => {
 
           <Link href="/">
             <a
-              className={classes.title}
-              style={{
-                color: isActive("/") ? "#009688" : "#fff",
-                fontWeight: "700"
-              }}
+            // className={classes.title}
+            // style={{
+            //   color: isActive("/") ? "#009688" : "#fff",
+            //   fontWeight: "700"
+            // }}
             >
               RS Library
             </a>
