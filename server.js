@@ -7,6 +7,7 @@ const helmet = require("helmet");
 const mongoSessionStore = require("connect-mongo");
 const compression = require("compression");
 const session = require("express-session");
+const cors = require("cors");
 
 require("dotenv").config();
 require("./server/passport");
@@ -45,6 +46,8 @@ app
       server.use(helmet());
       server.use(compression());
     }
+
+    server.use(cors());
 
     server.use(express.json());
 
@@ -131,7 +134,7 @@ app
 
     server.listen(port, err => {
       if (err) throw err;
-      console.log(`Server listening on ${port}`);
+      console.log(`Server listening on ${ROOT_URL}`);
     });
   })
   .catch(err => console.error(err));
