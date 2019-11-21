@@ -21,6 +21,7 @@ import Link from "next/link";
 import { fade } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 import Fade from "@material-ui/core/Fade";
+import baseUrl from "../lib/baseUrl";
 
 const INITIAL_STATE = {
   email: "",
@@ -74,7 +75,7 @@ export default function Login() {
         email: state.email,
         password: state.password
       };
-      const response = await axios.post("/api/auth/signin", payload);
+      const response = await axios.post(`/api/auth/signin`, payload);
       handleLogin(response.data);
     } catch (err) {
       showError(err);
