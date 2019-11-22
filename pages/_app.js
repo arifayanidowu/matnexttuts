@@ -53,7 +53,7 @@ export default class MyApp extends App {
           if (isLoggedIn) {
             redirectUser(ctx, "/");
           }
-          return {};
+          // return {};
         }
       } catch (error) {
         console.log(error.message);
