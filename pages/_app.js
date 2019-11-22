@@ -32,8 +32,9 @@ export default class MyApp extends App {
         const payload = {
           headers: { authorization: "Bearer ".concat(token) }
         };
-        const response = await axios.get(`/api/auth/`, payload);
+        const response = await axios.get(`${baseUrl}/api/auth/`, payload);
         const user = response.data;
+        pageProps.user = user;
 
         const isLoggedIn =
           ctx.pathname === "/login" ||
@@ -44,7 +45,6 @@ export default class MyApp extends App {
             redirectUser(ctx, "/");
           }
         }
-        pageProps.user = user;
       } catch (error) {
         console.log(error.message);
         destroyCookie(ctx, "token");
