@@ -1,9 +1,12 @@
 {
+  "lang": "en-US",
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",
   "Scope": "/",
   "start_url": "/",
+  "name": "RSLIBRARY",
+  "short_name": "RSLIBRARY",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
