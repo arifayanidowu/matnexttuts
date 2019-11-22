@@ -118,7 +118,8 @@ const useStyles = makeStyles(theme => ({
   flex: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    padding: "0 40px"
   }
 }));
 
@@ -201,23 +202,34 @@ const Navbar = ({ id, name, avatar }) => {
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
-      <div className={classes.flex}>
+      {/* <div className={classes.flex}>
         <Avatar
           alt={name}
           src={avatar}
           className={classes.avatar}
           style={{ marginLeft: "-75px" }}
         />
-        <Typography
-          variant="h5"
-          component="h1"
-          style={{ padding: "20px", marginLeft: "-15px" }}
-        >
+        <Typography variant="h5" component="h1">
           <span style={{ textDecoration: "capitalize" }}>
             {name.charAt(0).toUpperCase() + name.substring(1)}
           </span>
         </Typography>
-      </div>
+      </div> */}
+
+      <ListItem>
+        <ListItemIcon style={{ minWidth: "12px" }}>
+          <Avatar
+            alt={name}
+            src={avatar}
+            className={classes.avatar}
+            style={{ left: "-13px" }}
+          />
+        </ListItemIcon>
+        <ListItemText
+          primary={name.charAt(0).toUpperCase() + name.substring(1)}
+        />
+      </ListItem>
+
       <Divider light />
       <SidebarNavList />
     </div>
