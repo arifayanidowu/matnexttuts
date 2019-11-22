@@ -29,6 +29,7 @@ import NProgress from "nprogress";
 import axios from "axios";
 import { handleLogOut } from "../lib/auth";
 import SidebarNavList from "./SidebarNavList";
+import baseUrl from "../lib/baseUrl";
 
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
@@ -189,7 +190,7 @@ const Navbar = ({ id, name, avatar }) => {
   };
 
   const signOut = async () => {
-    await axios.get("/api/auth/signout");
+    await axios.get(`${baseUrl}/api/auth/signout`);
     handleLogOut();
   };
 
