@@ -6,7 +6,7 @@ import { parseCookies, destroyCookie } from "nookies";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import axios from "axios";
 import theme from "../lib/theme";
-import { redirectUser } from "../lib/auth";
+import { redirectUser, handleLogOut } from "../lib/auth";
 import baseUrl from "../lib/baseUrl";
 import jwt from "jsonwebtoken";
 import cookies from "js-cookie";
@@ -56,7 +56,8 @@ export default class MyApp extends App {
         }
       } catch (error) {
         console.log(error.message);
-        destroyCookie(ctx, "token");
+        // destroyCookie(ctx, "token");
+        handleLogOut();
         redirectUser(ctx, "/login");
       }
     }
