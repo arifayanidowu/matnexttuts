@@ -53,11 +53,11 @@ export default class MyApp extends App {
           if (isLoggedIn) {
             redirectUser(ctx, "/");
           }
+          return {};
         }
       } catch (error) {
         console.log(error.message);
-        // destroyCookie(ctx, "token");
-        handleLogOut();
+        destroyCookie(ctx, "token");
         redirectUser(ctx, "/login");
       }
     }
