@@ -10,6 +10,7 @@ import { redirectUser } from "../lib/auth";
 import baseUrl from "../lib/baseUrl";
 import jwt from "jsonwebtoken";
 import cookies from "js-cookie";
+import fetch from "isomorphic-unfetch";
 
 export default class MyApp extends App {
   static getInitialProps = async ({ Component, ctx }) => {
@@ -32,9 +33,17 @@ export default class MyApp extends App {
         const payload = {
           headers: { authorization: "Bearer ".concat(token) }
         };
-        const response = await axios.get(`/api/auth/`, payload);
-        const user = response.data;
+        // const response = await axios.get(`${baseUrl}/api/auth/`, payload);
+        const res = await fetch(`${baseUrl}/api/auth`, {
+          method: "GET",
+          headers: {
+            authorization: "Bearer ".concat(token)
+          }
+        });
+        const data = await res.json();
+        const user = data;
         pageProps.user = user;
+        // console.log(user);
 
         const isLoggedIn =
           ctx.pathname === "/login" ||
