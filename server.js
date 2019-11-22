@@ -55,7 +55,7 @@ app
       handle(req, res);
     });
 
-    server.get("/static/*", (req, res) => {
+    server.get("/public/*", (req, res) => {
       handle(req, res);
     });
 
