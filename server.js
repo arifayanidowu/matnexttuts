@@ -16,7 +16,7 @@ const routes = require("./server/routes");
 
 const dev = process.env.NODE_ENV !== "producttion";
 const port = process.env.PORT || 3000;
-const ROOT_URL = dev ? `http://localhost:${port}` : process.env.PRODUCTION_URL;
+const ROOT_URL = dev ? `http://127.0.0.1:${port}` : process.env.PRODUCTION_URL;
 
 const app = next({ dev });
 
@@ -55,7 +55,7 @@ app
       handle(req, res);
     });
 
-    server.get("/static/*", (req, res) => {
+    server.get("/public/*", (req, res) => {
       handle(req, res);
     });
 
@@ -98,28 +98,28 @@ app
     server.use("/", routes);
 
     /** Set Cookie Header for SameSite */
-    server.set("SameSite", "None");
-    server.set("Secure", true);
+    // server.set("SameSite", "None");
+    // server.set("Secure", true);
 
-    server.use(function(req, res, next) {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Credentials", "true");
-      res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET,HEAD,OPTIONS,POST,PUT"
-      );
-      res.setHeader(
-        "Access-Control-Allow-Headers",
-        "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
-        "Access-Control-Allow-Headers: Authorization"
-      );
-      if (req.method === "OPTIONS") {
-        // Stop the middleware chain
-        return res.status(200).end();
-      }
+    // server.use(function(req, res, next) {
+    //   res.setHeader("Access-Control-Allow-Origin", "*");
+    //   res.setHeader("Access-Control-Allow-Credentials", "true");
+    //   res.setHeader(
+    //     "Access-Control-Allow-Methods",
+    //     "GET,HEAD,OPTIONS,POST,PUT"
+    //   );
+    //   // res.setHeader(
+    //   //   "Access-Control-Allow-Headers",
+    //   //   "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+    //   //   "Access-Control-Allow-Headers: Authorization"
+    //   // );
+    //   // if (req.method === "OPTIONS") {
+    //   //   // Stop the middleware chain
+    //   //   return res.status(200).end();
+    //   // }
 
-      next();
-    });
+    //   next();
+    // });
 
     /* Error handling from async / await functions */
     server.use((err, req, res, next) => {
