@@ -76,7 +76,9 @@ export default function Login() {
         email: state.email,
         password: state.password
       };
-      const response = await axios.post(`${baseUrl}/api/auth/signin`, payload);
+      const response = await axios.post(`${baseUrl}/api/auth/signin`, payload, {
+        withCredentials: true
+      });
       // const res = await fetch(`/api/auth/signin`, {
       //   method: "POST",
       //   body: payload
