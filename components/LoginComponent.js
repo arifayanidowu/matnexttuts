@@ -22,6 +22,7 @@ import { fade } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 import Fade from "@material-ui/core/Fade";
 import baseUrl from "../lib/baseUrl";
+import fetch from "isomorphic-unfetch";
 
 const INITIAL_STATE = {
   email: "",
@@ -75,7 +76,12 @@ export default function Login() {
         email: state.email,
         password: state.password
       };
-      const response = await axios.post(`/api/auth/signin`, payload);
+      const response = await axios.post(`${baseUrl}/api/auth/signin`, payload);
+      // const res = await fetch(`/api/auth/signin`, {
+      //   method: "POST",
+      //   body: payload
+      // });
+      // const data = res.json();
       handleLogin(response.data);
     } catch (err) {
       showError(err);
