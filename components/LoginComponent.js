@@ -82,6 +82,7 @@ export default function Login() {
       //   body: JSON.stringify(payload)
       // });
       const data = response.data;
+      console.log(data);
       handleLogin(data);
     } catch (err) {
       showError(err);
