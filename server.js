@@ -47,7 +47,7 @@ app
       server.use(compression());
     }
 
-    server.use(cors());
+    // server.use(cors());
 
     server.use(express.json());
 
