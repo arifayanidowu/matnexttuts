@@ -81,7 +81,7 @@ export default function Signup() {
         department: state.department,
         password: state.password
       };
-      await axios.post(`${baseUrl}/api/auth/signup`, payload);
+      await axios.post(`/api/auth/signup`, payload);
       handleSignup();
     } catch (err) {
       showError(err);

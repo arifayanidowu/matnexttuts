@@ -75,7 +75,7 @@ export default function Login() {
         email: state.email,
         password: state.password
       };
-      const response = await axios.post(`${baseUrl}/api/auth/signin`, payload);
+      const response = await axios.post(`/api/auth/signin`, payload);
       handleLogin(response.data);
     } catch (err) {
       showError(err);
