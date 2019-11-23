@@ -76,15 +76,13 @@ export default function Login() {
         email: state.email,
         password: state.password
       };
-      const response = await axios.post(`${baseUrl}/api/auth/signin`, payload, {
-        withCredentials: true
-      });
+      const response = await axios.post(`${baseUrl}/api/auth/signin`, payload);
       // const res = await fetch(`/api/auth/signin`, {
       //   method: "POST",
-      //   body: payload
+      //   body: JSON.stringify(payload)
       // });
-      // const data = res.json();
-      handleLogin(response.data);
+      const data = response.data;
+      handleLogin(data);
     } catch (err) {
       showError(err);
     }

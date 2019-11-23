@@ -101,16 +101,16 @@ app
     // server.set("SameSite", "None");
     // server.set("Secure", true);
 
-    server.use(function(req, res, next) {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Credentials", "true");
-      res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET,HEAD,OPTIONS,POST,PUT"
-      );
+    // server.use(function(req, res, next) {
+    //   res.setHeader("Access-Control-Allow-Origin", "*");
+    //   res.setHeader("Access-Control-Allow-Credentials", "true");
+    //   res.setHeader(
+    //     "Access-Control-Allow-Methods",
+    //     "GET,HEAD,OPTIONS,POST,PUT"
+    //   );
 
-      next();
-    });
+    //   next();
+    // });
 
     /* Error handling from async / await functions */
     server.use((err, req, res, next) => {
