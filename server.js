@@ -47,7 +47,7 @@ app
       server.use(compression());
     }
 
-    // server.use(cors());
+    server.use(cors());
 
     server.use(express.json());
 
@@ -101,16 +101,25 @@ app
     // server.set("SameSite", "None");
     // server.set("Secure", true);
 
-    server.use(function(req, res, next) {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader("Access-Control-Allow-Credentials", "true");
-      res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET,HEAD,OPTIONS,POST,PUT"
-      );
+    // server.use(function(req, res, next) {
+    //   res.setHeader("Access-Control-Allow-Origin", "*");
+    //   res.setHeader("Access-Control-Allow-Credentials", "true");
+    //   res.setHeader(
+    //     "Access-Control-Allow-Methods",
+    //     "GET,HEAD,OPTIONS,POST,PUT"
+    //   );
+    //   // res.setHeader(
+    //   //   "Access-Control-Allow-Headers",
+    //   //   "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+    //   //   "Access-Control-Allow-Headers: Authorization"
+    //   // );
+    //   // if (req.method === "OPTIONS") {
+    //   //   // Stop the middleware chain
+    //   //   return res.status(200).end();
+    //   // }
 
-      next();
-    });
+    //   next();
+    // });
 
     /* Error handling from async / await functions */
     server.use((err, req, res, next) => {

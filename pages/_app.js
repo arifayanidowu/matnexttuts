@@ -34,7 +34,7 @@ export default class MyApp extends App {
           headers: { authorization: "Bearer ".concat(token) }
         };
         // const response = await axios.get(`${baseUrl}/api/auth/`, payload);
-        const res = await fetch(`/auth`, {
+        const res = await fetch(`${baseUrl}/api/auth`, {
           method: "GET",
           headers: {
             authorization: "Bearer ".concat(token)
