@@ -128,12 +128,8 @@ app
       next();
     });
 
-    server.get("*", (req, res) => {
+    server.all("*", (req, res) => {
       handle(req, res);
-    });
-
-    server.post("*", (req, res) => {
-      return handle(req, res);
     });
 
     server.listen(port, err => {
