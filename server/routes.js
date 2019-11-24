@@ -15,15 +15,15 @@ const catchErrors = fn => {
  * Auth routes /api/auth
  */
 router.post(
-  "/api/auth/signup",
+  "/auth/signup",
   signupValidationRules(),
   validate,
   catchErrors(authController.signUp)
 );
-router.post("/api/auth/signin", authController.signin);
-router.get("/api/auth/signout", authController.signout);
+router.post("/auth/signin", authController.signin);
+router.get("/auth/signout", authController.signout);
 
-router.get("/api/auth/", authController.home);
+router.get("/auth/", authController.home);
 
 /**
  * User routes /api/users/
